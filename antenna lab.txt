@@ -1,0 +1,119 @@
+1.To study the radiation characteristics of Dipole antenna using MATLAB
+
+clc;
+clear;
+close all;
+% Wavelength
+lam = 1;
+% Dipole antanna
+L = lam/2;
+% Phase constant
+B = 2*pi/lam;
+% Angle in degrees
+t = 0:0.1:360;
+ant= dipole('Length',0.5,'Width',0.05);
+% dipole antenna diagram
+figure; show(ant);
+freq = 300e6;
+% power pattern
+figure; pattern(ant, freq);
+% Far-field pattern equation
+E = abs((cos(B*L/2*cosd(t))-cos(B*L/2))./sind(t)).^2;
+figure; polarpattern(t,E,'AngleResolution',30)
+
+
+2.To study the radiation characteristics of patch antenna using MATLAB.
+
+clc;
+clear;
+close all;
+d = dielectric("FR4");
+pm = patchMicrostrip(Length=75e-3, Width=37e-3, ...
+GroundPlaneLength=120e-3, GroundPlaneWidth=120e-3, ...
+Substrate=d);
+show(pm)
+figure
+pattern(pm,1.67e9)
+figure; impedance(pm,linspace(0.5e9,1e9,11));
+
+
+3.RADIATION PATTERN OF LOG PERIODIC ANTENNA
+USING MATLAB
+
+clc;
+clear;
+close all;
+lpdipole = lpda('BoardWidth',[20.37e-3 24.37e-3]);
+show(lpdipole);
+freq = linspace(5e9, 8e9, 41);
+figure;
+impedance(lpdipole,freq);
+figure; pattern(lpdipole,5.8e9);
+
+
+4.RADIATION PATTERN OF YAGI UDA ANTENNA USING
+MATLAB
+
+clc;
+clear;
+close all;
+ant = yagiUda;
+show(ant);
+% Plot Radiation Pattern
+freq = 300e6;
+figure; pattern(ant, freq);
+% Plot Horizontal Polarization Components
+figure; pattern(ant, freq, 'Polarization', 'H');
+% Plot Vertical Polarization Components
+figure; pattern(ant, freq, 'Polarization', 'V');
+% Plot 2D Patterns
+figure; pattern(ant, freq, 0, 0:1:360);
+% Plot Electric Field and Power
+figure; pattern(ant, freq, 'Type', 'efield', 'Normalize', true);
+% Beamwidth
+[bw, angles] = beamwidth(ant, freq, 0, 1:1:360);
+disp('Half power Beam width')
+disp(bw);
+
+
+5.RADIATION PATTERN OF E-PLANE AND H-PLANE
+HORN ANTENNA USING MATLAB
+
+clc;
+clear;
+close all;
+ant = horn;
+show(ant);
+% Plot Radiation Pattern
+freq = 300e6;
+figure; pattern(ant, freq);
+% % Plot Horizontal Polarization Components
+figure; pattern(ant, freq, 'Polarization', 'H');
+% % Plot Vertical Polarization Components
+figure; pattern(ant, freq, 'Polarization', 'V');
+% Plot 2D Patterns
+figure; pattern(ant, freq, 0, 0:1:360);
+% Plot Electric Field and Power
+figure; pattern(ant, freq, 'Type', 'efield', 'Normalize', true);
+% Beamwidth
+[bw, angles] = beamwidth(ant, freq, 0, 1:1:360);
+disp('Half power Beam width')
+disp(bw);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
